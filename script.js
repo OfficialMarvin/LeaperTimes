@@ -7,17 +7,50 @@ const stockData = [
     { symbol: "ZTX", price: 56.78, change: -1.12 }
 ];
 
-// Function to display stock data
-function displayStocks() {
-    const stockList = document.getElementById("stock-list");
-    stockList.innerHTML = "";
+// Function to display stock data in a banner
+function displayStockBanner() {
+    const stockBanner = document.getElementById("stock-banner");
+    let stockText = "";
 
     for (const stock of stockData) {
-        const listItem = document.createElement("li");
-        listItem.textContent = `${stock.symbol}: $${stock.price.toFixed(2)} (${stock.change > 0 ? "+" : ""}${stock.change.toFixed(2)})`;
-        stockList.appendChild(listItem);
+        stockText += `${stock.symbol}: $${stock.price.toFixed(2)} (${stock.change > 0 ? "+" : ""}${stock.change.toFixed(2)}) | `;
     }
+
+    stockBanner.textContent = stockText;
 }
 
-// Call displayStocks function when the page loads
-window.addEventListener("load", displayStocks);
+// Function to display stock data in a table
+function displayStockTable() {
+    const stockTable = document.getElementById("stock-table");
+    let tableHTML = `
+        <table>
+            <tr>
+                <th>Symbol</th>
+                <th>Price</th>
+                <th>Change</th>
+            </tr>
+    `;
+
+    for (const stock of stockData) {
+        tableHTML += `
+            <tr>
+                <td>${stock.symbol}</td>
+                <td>$${stock.price.toFixed(2)}</td>
+                <td>${stock.change > 0 ? "+" : ""}${stock.change.toFixed(2)}</td>
+            </tr>
+        `;
+    }
+
+    tableHTML += `</table>`;
+    stockTable.innerHTML = tableHTML;
+}
+
+// Call displayStockBanner and displayStockTable functions when the page loads
+window.addEventListener("load", function() {
+    if (document.getElementById("stock-banner")) {
+        displayStockBanner();
+    }
+    if (document.getElementById("stock-table")) {
+        displayStockTable();
+    }
+});
